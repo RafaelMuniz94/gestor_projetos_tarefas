@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
-using Gestor_Projetos_Tarefas.Api.ViewModels;
+using Gestor_Projetos_Tarefas.Api.Utils;
+using Gestor_Projetos_Tarefas.Api.ViewModels.Request;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
-using Gestor_Projetos_Tarefas.Database.Repositories;
+using Gestor_Projetos_Tarefas.Domain.DTOs;
 using Gestor_Projetos_Tarefas.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Gestor_Projetos_Tarefas.Api.Controllers
 {
@@ -31,10 +33,23 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
         [HttpPost("{projectID}")]
         public async Task<IActionResult> CreateTask(Guid projectID, [FromBody] CreateTaskViewModel createTaskViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+               string errorMessage = new ErrorHandlingUtils().ReturnModelStateMessages(ModelState);
+                return BadRequest(errorMessage);
+            }
+
             Project project = await projectsRepository.ReturnProject(projectID);
 
             if(project == null) {
                 return NotFound("Projeto não encontrado, não é possível adicionar uma tarefa!");
+            }
+
+            List<ProjectTask> projectTasks = await tasksRepository.ReturnTasktListByProject(project.ID);
+
+            if(projectTasks.Count == 20)
+            {
+                return BadRequest("O Projeto ja possui o limite de 20 tarefas, finalize ou remova tarefas para adicionar novas!");
             }
 
             User user = await usersRepository.ReturnUser(createTaskViewModel.User);
@@ -59,26 +74,71 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
                 return BadRequest("Não foi possível cadastrar uma nova tarefa!");
             }
 
-            TaskUpdateHistory record = new TaskUpdateHistory(user.ID, "Criacao", createdTask.ID, createTaskViewModel.Comment);
-            bool historySuccess = await historyRepository.AddHistoryRecord(record);
+            RecordOperation("Criar", createdTask.ID,createdTask.ID, createTaskViewModel.Comment);
+            
 
-            if (!historySuccess) { 
-            // TODO: Adicionar LOG
-            }
-
-            return Ok(createdTask);
+            return Created($"api/task/{createdTask.ID}", createdTask);
         }
 
         [HttpPut("{taskID}")]
-        public async Task<IActionResult> UpdateTask(Guid taskID)
+        public async Task<IActionResult> UpdateTask(Guid taskID, [FromBody] UpdateTaskViewModel updateTaskViewModel)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                string errorMessage = new ErrorHandlingUtils().ReturnModelStateMessages(ModelState);
+                return BadRequest(errorMessage);
+            }
+
+            UpdateProjectTaskDTO taskDto = mapper.Map<UpdateProjectTaskDTO>(updateTaskViewModel);
+            taskDto.ID = taskID;
+
+            ProjectTask updatedTask = await tasksRepository.UpdateTask(taskDto);
+
+            if(updatedTask == null)
+            {
+                return NotFound("A tarefa nao foi encontrada!");
+            }
+
+            RecordOperation("Atualizar", updatedTask.ID,updatedTask.User, updateTaskViewModel.Comment);
+
+            return Ok(updatedTask);
         }
 
         [HttpDelete("{taskID}")]
-        public async Task<IActionResult> DeleteTask(Guid taskID)
+        public async Task<IActionResult> DeleteTask(Guid taskID, [FromQuery] DeleteTaskViewModel deleTaskViewModel)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                string errorMessage = new ErrorHandlingUtils().ReturnModelStateMessages(ModelState);
+                return BadRequest(errorMessage);
+            }
+
+            bool? deleteStatus = await tasksRepository.DeleteTask(taskID);
+
+            if(deleteStatus == null)
+            {
+                return NotFound("A tarefa nao foi encontrada!");
+            }
+
+            if (!(bool)deleteStatus)
+            {
+                throw new Exception("Nao foi possivel deletar a tarefa!"); 
+            }
+
+            RecordOperation("Deletar", taskID, deleTaskViewModel.User, deleTaskViewModel.Comment);
+            return NoContent();
+        }
+
+
+        private async void RecordOperation(string operation, Guid taskID,Guid UserID, string? comment)
+        {
+            TaskUpdateHistory record = new TaskUpdateHistory(UserID, operation, taskID, comment);
+            bool historySuccess = await historyRepository.AddHistoryRecord(record);
+
+            if (!historySuccess)
+            {
+                // TODO: Adicionar LOG
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Database.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Gestor_Projetos_Tarefas.Api.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,9 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddAutoMapper(typeof(TaskUpdateMapper));
 
 
 var app = builder.Build();

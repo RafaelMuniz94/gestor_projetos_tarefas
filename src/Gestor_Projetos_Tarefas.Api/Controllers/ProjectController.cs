@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Gestor_Projetos_Tarefas.Api.ViewModels;
+using Gestor_Projetos_Tarefas.Api.ViewModels.Request;
+using Gestor_Projetos_Tarefas.Api.ViewModels.Return;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +15,12 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
         private readonly IProjectsRepository projectsRepository;
         private readonly ITasksRepository  tasksRepository;
         private readonly IUsersRepository usersRepository;
-        private readonly IMapper mapper;
 
-        public ProjectController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUsersRepository _usersRepository, IMapper _mapper)
+        public ProjectController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUsersRepository _usersRepository)
         {
             this.projectsRepository = _projectsRepository;
             this.tasksRepository = _tasksRepository;
             this.usersRepository = _usersRepository;
-            this.mapper = _mapper;
         }
 
         [HttpGet]
@@ -56,8 +55,12 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
 
             List<ProjectTask> tasks = await tasksRepository.ReturnTasktListByProject(projectID);
 
+            ProjectDetailsViewModel returnViewModel = new ProjectDetailsViewModel();
+            returnViewModel.project = project;
+            returnViewModel.tasks = tasks;
 
-            return Ok();
+
+            return Ok(returnViewModel);
         }
 
         [HttpPost]
@@ -72,7 +75,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
                 return BadRequest("Não foi possível cadastrar um novo projeto!");
             }
 
-            return Ok(project);
+            return Created($"api/project/{project.ID}",project);
         }
 
     }
