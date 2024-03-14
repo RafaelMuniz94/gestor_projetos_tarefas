@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gestor_Projetos_Tarefas.Domain.Models.Enums
 {
-    internal enum TaskPriority
+    public enum TaskPriority
     {
         Baixa,
         Media,

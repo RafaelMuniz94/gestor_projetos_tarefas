@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gestor_Projetos_Tarefas.Database\Gestor_Projetos_Tarefas.Database.csproj" />
     <ProjectReference Include="..\Gestor_Projetos_Tarefas.Domain\Gestor_Projetos_Tarefas.Domain.csproj" />
   </ItemGroup>
 

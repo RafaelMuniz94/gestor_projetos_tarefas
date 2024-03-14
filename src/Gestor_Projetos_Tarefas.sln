@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gestor_Projetos_Tarefas.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gestor_Projetos_Tarefas.Api.Test", "Gestor_Projetos_Tarefas.Api.Test\Gestor_Projetos_Tarefas.Api.Test.csproj", "{9E5EDBD0-BD09-4C9A-9F1A-FC62EC2E4E2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gestor_Projetos_Tarefas.Database", "Gestor_Projetos_Tarefas.Database\Gestor_Projetos_Tarefas.Database.csproj", "{03708E6C-21F8-4C9C-9E67-51F36E62AABC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9E5EDBD0-BD09-4C9A-9F1A-FC62EC2E4E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E5EDBD0-BD09-4C9A-9F1A-FC62EC2E4E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E5EDBD0-BD09-4C9A-9F1A-FC62EC2E4E2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03708E6C-21F8-4C9C-9E67-51F36E62AABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03708E6C-21F8-4C9C-9E67-51F36E62AABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03708E6C-21F8-4C9C-9E67-51F36E62AABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03708E6C-21F8-4C9C-9E67-51F36E62AABC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
