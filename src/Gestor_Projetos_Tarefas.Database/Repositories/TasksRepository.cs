@@ -2,6 +2,7 @@
 using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Domain.DTOs;
 using Gestor_Projetos_Tarefas.Domain.Models;
+using Gestor_Projetos_Tarefas.Domain.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -54,7 +55,6 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
             
             if (updatedTask is not null)
             {
-                updatedTask.Priority = taskDTO.Priority ?? updatedTask.Priority; 
                 updatedTask.Status = taskDTO.Status ?? updatedTask.Status; 
                 updatedTask.Title = taskDTO.Title ?? updatedTask.Title; 
                 updatedTask.Description = taskDTO.Description ?? updatedTask.Description; 
@@ -67,6 +67,13 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
             }
 
             return updatedTask;
+        }
+
+
+        public async Task<bool> ReturnActiveTasktByProject(Guid projectID)
+        {
+            List<ProjectTask> tasks = await dbContext.Tasks.Where(task => task.Project == projectID && task.Status == ProjectTaskStatus.Pendente).ToListAsync();
+            return tasks.Count > 0;
         }
     }
 }

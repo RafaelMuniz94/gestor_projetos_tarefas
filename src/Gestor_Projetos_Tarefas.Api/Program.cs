@@ -1,13 +1,37 @@
+using Gestor_Projetos_Tarefas.Database.Repositories;
+using Gestor_Projetos_Tarefas.Database.Interfaces;
+using Gestor_Projetos_Tarefas.Database.Context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddTransient<IProjectsRepository, ProjectsRepository>();
+builder.Services.AddTransient<ITasksRepository, TasksRepository>();
+builder.Services.AddTransient<IUsersRepository, UsersRepository>();
+builder.Services.AddTransient<IHistoryUpdateProjectRepository, HistoryUpdateProjectRepository>();
+builder.Services.AddDbContext<DataBaseContext>();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+}); // Essa opcao evita que o .net execute um envio de erro automatico em caso de modelstate invalida, devido a Json em formato errado.
+
+
+
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
+
+using(var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -17,8 +41,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

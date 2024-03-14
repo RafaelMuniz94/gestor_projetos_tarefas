@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Gestor_Projetos_Tarefas.Domain.Models
 {
@@ -26,12 +23,15 @@ namespace Gestor_Projetos_Tarefas.Domain.Models
             this.Comment = comment;
         }
 
+        [Key]
         public Guid ID { get; set; }
         public DateTime ModificationTime { get; }
 
+        [ForeignKey("users")]
         public Guid User { get; set; }
         public string Change { get; set; }
 
+        [ForeignKey("tasks")]
         public Guid Task { get; set; }
 
         public string? Comment { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Gestor_Projetos_Tarefas.Domain.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,10 @@ namespace Gestor_Projetos_Tarefas.Domain.Models
         public User()
         {
             this.ID = Guid.NewGuid();
+            this.Projects = new List<Project>();
         }
 
-        public User(string name, Role role, string email, List<Guid> projects)
+        public User(string name, Role role, string email, List<Project> projects)
         {
             this.ID = Guid.NewGuid();
             this.Name = name;
@@ -25,11 +27,15 @@ namespace Gestor_Projetos_Tarefas.Domain.Models
             this.Projects = projects;
         }
 
+        [Key]
         public Guid ID { get; set; }
         public String Name { get; set; }
         public  Role Role { get; set; }
 
         public String Email {  get; set; }
-        public List<Guid> Projects { get; set; }
+
+        
+        [ForeignKey("projects")]
+        public List<Project> Projects { get; set; }
     }
 }

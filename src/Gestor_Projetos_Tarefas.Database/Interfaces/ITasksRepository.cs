@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace Gestor_Projetos_Tarefas.Database.Interfaces
 {
-    internal interface ITasksRepository
+    public interface ITasksRepository
     {
         Task<ProjectTask> AddTask(ProjectTask task);
         Task<ProjectTask> UpdateTask(UpdateProjectTaskDTO taskDTO);
         Task<List<ProjectTask>> ReturnTasktListByProject(Guid projectID);
+        Task<bool> ReturnActiveTasktByProject(Guid projectID);
         Task<List<ProjectTask>> ReturnTasktListByUser(Guid userID);
         Task<bool?> DeleteTask(Guid taskID);
     }

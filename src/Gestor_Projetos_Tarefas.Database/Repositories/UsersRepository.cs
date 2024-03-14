@@ -5,7 +5,7 @@ using Gestor_Projetos_Tarefas.Domain.Models;
 
 namespace Gestor_Projetos_Tarefas.Database.Repositories
 {
-    internal class UsersRepository : IUsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly DataBaseContext dbContext;
 
@@ -19,8 +19,10 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
             User user = await dbContext.Users.FindAsync(userID);
 
             if (user == null) return null;
-
-            bool removed = user.Projects.Remove(projectID);
+            Project project = await dbContext.Projects.FindAsync(projectID);
+            
+            if (project == null) return null;
+            bool removed = user.Projects.Remove(project);
 
             return removed;
 

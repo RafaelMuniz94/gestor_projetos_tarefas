@@ -10,8 +10,7 @@ namespace Gestor_Projetos_Tarefas.Domain.DTOs
     public class UpdateProjectTaskDTO
     {
         public Guid ID { get; set; }
-        public TasksStatus? Status { get; set; }
-        public TaskPriority? Priority { get; set; }
+        public ProjectTaskStatus? Status { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public DateTime? ExpirationDate { get; set; }
