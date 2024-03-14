@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gestor_Projetos_Tarefas.Api.Utils;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Request;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Return;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
@@ -66,6 +67,12 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectViewModel createProjectViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                string errorMessage = new ErrorHandlingUtils().ReturnModelStateMessages(ModelState);
+                return BadRequest(errorMessage);
+            }
+
             Project project = new Project(createProjectViewModel.ProjectName, createProjectViewModel.ProjectDescription);
 
             project = await projectsRepository.AddProject(project);
