@@ -10,5 +10,6 @@ namespace Gestor_Projetos_Tarefas.Database.Interfaces
     public interface IUsersRepository
     {
         Task<bool?> RemoveProjectFromUser(Guid userID,Guid projectID);
+        Task<User> ReturnUser(Guid userID);
     }
 }

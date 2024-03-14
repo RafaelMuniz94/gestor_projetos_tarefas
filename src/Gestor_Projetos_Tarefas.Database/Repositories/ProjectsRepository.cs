@@ -48,9 +48,18 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
             return project;
         }
 
-        public async Task<List<Project>> ReturnProjectList(List<Guid> projectIDs)
+        public async Task<List<Project>> ReturnProjectList(List<Guid>? projectIDs)
         {
-            List<Project> list = await dbContext.Projects.Where(project => projectIDs.All(ids => project.ID == ids)).ToListAsync();
+            List<Project> list = new List<Project>();
+
+            if(projectIDs != null)
+            {
+               list = await dbContext.Projects.Where(project => projectIDs.All(ids => project.ID == ids)).ToListAsync();
+            }
+            else
+            {
+                list = await dbContext.Projects.ToListAsync();
+            }
 
             return list;
         }

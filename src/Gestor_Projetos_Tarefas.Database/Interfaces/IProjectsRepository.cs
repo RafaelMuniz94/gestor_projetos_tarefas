@@ -8,7 +8,7 @@ namespace Gestor_Projetos_Tarefas.Database.Interfaces
     {
         Task<Project> AddProject(Project project);
         Task<Project> ReturnProject(Guid projectID);
-        Task<List<Project>> ReturnProjectList(List<Guid> projectIDs);
+        Task<List<Project>> ReturnProjectList(List<Guid>? projectIDs=null);
         Task<bool?> DeleteProject(Guid projectID);
         Task<Project> UpdateProject(UpdateProjectDTO projectDTO);
     }

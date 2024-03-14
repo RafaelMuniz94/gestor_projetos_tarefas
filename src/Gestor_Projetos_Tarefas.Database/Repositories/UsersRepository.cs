@@ -27,5 +27,12 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
             return removed;
 
         }
+
+        public async Task<User> ReturnUser(Guid userID)
+        {
+            User user = await dbContext.Users.FindAsync(userID);
+
+            return user;
+        }
     }
 }
