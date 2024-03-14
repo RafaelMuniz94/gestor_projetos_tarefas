@@ -12,14 +12,25 @@ namespace Gestor_Projetos_Tarefas.Domain.Models
     {
         public TaskUpdateHistory()
         {
-            
+            this.ID = Guid.NewGuid();
+            this.ModificationTime = DateTime.Now;
+        }
+
+        public TaskUpdateHistory(Guid user, string change, Guid task, string? comment)
+        {
+            this.ID = Guid.NewGuid();
+            this.ModificationTime = DateTime.Now;
+            this.User = user;
+            this.Change = change;
+            this.Task = task;
+            this.Comment = comment;
         }
 
         public Guid ID { get; set; }
         public DateTime ModificationTime { get; }
 
         public Guid User { get; set; }
-        public String Change { get; set; }
+        public string Change { get; set; }
 
         public Guid Task { get; set; }
 

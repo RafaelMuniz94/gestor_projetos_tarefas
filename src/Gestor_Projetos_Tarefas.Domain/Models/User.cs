@@ -11,6 +11,20 @@ namespace Gestor_Projetos_Tarefas.Domain.Models
     [Table("users")]
     public class User
     {
+        public User()
+        {
+            this.ID = Guid.NewGuid();
+        }
+
+        public User(string name, Role role, string email, List<Guid> projects)
+        {
+            this.ID = Guid.NewGuid();
+            this.Name = name;
+            this.Role = role;
+            this.Email = email;
+            this.Projects = projects;
+        }
+
         public Guid ID { get; set; }
         public String Name { get; set; }
         public  Role Role { get; set; }
