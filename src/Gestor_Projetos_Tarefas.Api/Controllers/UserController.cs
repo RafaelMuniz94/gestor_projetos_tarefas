@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Domain.Models;
 using Gestor_Projetos_Tarefas.Domain.Models.Enums;
@@ -15,14 +16,16 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
         private readonly ITasksRepository tasksRepository;
         private readonly IUsersRepository usersRepository;
         private readonly IHistoryUpdateProjectRepository historyRepository;
+        private readonly IUserServices usersServices;
 
 
-        public UserController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUsersRepository _usersRepository, IHistoryUpdateProjectRepository _historyRepository)
+        public UserController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUsersRepository _usersRepository, IHistoryUpdateProjectRepository _historyRepository, IUserServices _usersServices)
         {
             this.projectsRepository = _projectsRepository;
             this.tasksRepository = _tasksRepository;
             this.usersRepository = _usersRepository;
             this.historyRepository = _historyRepository;
+            this.usersServices = _usersServices;
         }
 
         [HttpDelete("{userID}/{projectID}")]
@@ -61,35 +64,37 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
             return NoContent();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GeneratePerformanceReport(Guid userID,Guid userIDReport)
+        [HttpGet("report/{targetUserID}")]
+        public async Task<IActionResult> GeneratePerformanceReport(Guid targetUserID, [FromQuery] Guid requesterID)
         {
-            User requester = await usersRepository.ReturnUser(userID);
+            User requester = await usersServices.ReturnUser(requesterID);
             
             if(requester != null && requester.Role != Role.Gerente)
             {
                 throw new Exception("O usuario nao possui permissao para gerar relatorio!");
             }
 
-            List<ProjectTask> userTasks = await tasksRepository.ReturnTasktListByUser(userID);
+            List<ProjectTask> userTasks = await tasksRepository.ReturnTasktListByUser(targetUserID);
 
             int userTasksTotal = userTasks.Count;
             if (userTasksTotal == 0)
             {
-                return BadRequest($"O Usuario {userIDReport} nao possui tarefas");
+                return BadRequest($"O Usuario {targetUserID} nao possui tarefas");
             }
 
-            List<Guid> completeTaks = await historyRepository.ReturnHistoryByUser(userIDReport);
+            DateTime dateLimit = DateTime.Now.AddDays(-30);
+
+            List<Guid> completeTaks = await historyRepository.ReturnHistoryByUser(targetUserID,dateLimit);
             int completeTaksTotal = completeTaks.Count;
 
             if (completeTaksTotal == 0)
             {
-                return Ok($"O Usuario {userIDReport} nao finalizou tarefas nos ultimos 30 dias.");
+                return Ok($"O Usuario {targetUserID} nao finalizou tarefas nos ultimos 30 dias.");
             }
 
-            decimal tasksMedia = completeTaksTotal / userTasksTotal;
+            decimal tasksMedia = (completeTaksTotal*100) / userTasksTotal;
 
-            return Ok($"O usuario {userIDReport} realizou {completeTaksTotal} das {userTasksTotal}, totalizando um total de {tasksMedia}% de finalizacoes");
+            return Ok($"O usuario {targetUserID} realizou {completeTaksTotal} das {userTasksTotal}, totalizando um total de {tasksMedia}% de finalizacoes");
         }
     }
 }

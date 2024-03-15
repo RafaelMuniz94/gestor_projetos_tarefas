@@ -11,5 +11,7 @@ namespace Gestor_Projetos_Tarefas.Database.Interfaces
     {
         Task<bool?> RemoveProjectFromUser(Guid userID,Guid projectID);
         Task<User> ReturnUser(Guid userID);
+
+        Task<bool> AddProject(Guid userID, Project project);
     }
 }

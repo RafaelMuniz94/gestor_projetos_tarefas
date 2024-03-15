@@ -4,6 +4,8 @@ using Gestor_Projetos_Tarefas.Database.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Gestor_Projetos_Tarefas.Api.Mappers;
+using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
+using Gestor_Projetos_Tarefas.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddTransient<IProjectsRepository, ProjectsRepository>();
 builder.Services.AddTransient<ITasksRepository, TasksRepository>();
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();
 builder.Services.AddTransient<IHistoryUpdateProjectRepository, HistoryUpdateProjectRepository>();
+builder.Services.AddTransient<IUserServices, UserServices>();
 builder.Services.AddDbContext<DataBaseContext>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>

@@ -75,5 +75,12 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
             List<ProjectTask> tasks = await dbContext.Tasks.Where(task => task.Project == projectID && task.Status == ProjectTaskStatus.Pendente).ToListAsync();
             return tasks.Count > 0;
         }
+
+        public async Task<ProjectTask> ReturnTask(Guid taskID)
+        {
+            ProjectTask task = await dbContext.Tasks.Where(task => task.ID == taskID).SingleOrDefaultAsync();
+
+            return task;
+        }
     }
 }

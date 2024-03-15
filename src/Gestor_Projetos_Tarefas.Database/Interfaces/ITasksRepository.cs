@@ -12,6 +12,7 @@ namespace Gestor_Projetos_Tarefas.Database.Interfaces
     {
         Task<ProjectTask> AddTask(ProjectTask task);
         Task<ProjectTask> UpdateTask(UpdateProjectTaskDTO taskDTO);
+        Task<ProjectTask> ReturnTask(Guid taskID); 
         Task<List<ProjectTask>> ReturnTasktListByProject(Guid projectID);
         Task<bool> ReturnActiveTasktByProject(Guid projectID);
         Task<List<ProjectTask>> ReturnTasktListByUser(Guid userID);

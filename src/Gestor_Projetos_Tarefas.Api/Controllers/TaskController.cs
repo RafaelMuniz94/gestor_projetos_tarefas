@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+
+using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Api.Utils;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Request;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
@@ -19,14 +21,16 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
         private readonly ITasksRepository tasksRepository;
         private readonly IUsersRepository usersRepository;
         private readonly IHistoryUpdateProjectRepository historyRepository;
+        private readonly IUserServices usersServices;
         private readonly IMapper mapper;
 
-        public TaskController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUsersRepository _usersRepository, IHistoryUpdateProjectRepository _historyRepository, IMapper _mapper)
+        public TaskController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUsersRepository _usersRepository, IHistoryUpdateProjectRepository _historyRepository, IUserServices _usersServices, IMapper _mapper)
         {
             this.projectsRepository = _projectsRepository;
             this.tasksRepository = _tasksRepository;
             this.usersRepository = _usersRepository;
             this.historyRepository = _historyRepository;
+            this.usersServices = _usersServices;
             this.mapper = _mapper;
         }
 
@@ -74,8 +78,15 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
                 return BadRequest("Não foi possível cadastrar uma nova tarefa!");
             }
 
-            RecordOperation("Criar", createdTask.ID,createdTask.ID, createTaskViewModel.Comment);
+
+            bool userSaved = await usersRepository.AddProject(user.ID, project);
+
+            if(!userSaved)
+            {
+                // TODO: LOG 
+            }
             
+            RecordOperation("Criar", createdTask.ID,createdTask.User, createTaskViewModel.Comment);
 
             return Created($"api/task/{createdTask.ID}", createdTask);
         }
@@ -92,6 +103,8 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
             UpdateProjectTaskDTO taskDto = mapper.Map<UpdateProjectTaskDTO>(updateTaskViewModel);
             taskDto.ID = taskID;
 
+            ProjectTask oldTask = await tasksRepository.ReturnTask(taskID);
+
             ProjectTask updatedTask = await tasksRepository.UpdateTask(taskDto);
 
             if(updatedTask == null)
@@ -99,13 +112,23 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
                 return NotFound("A tarefa nao foi encontrada!");
             }
 
+               
+                if(oldTask.User != updatedTask.User) {
+                    bool updatedUser = await usersServices.ChangeTaskUser(oldTask.User, updatedTask.User, updatedTask.Project);
+                    if(!updatedUser)
+                    {
+                        throw new Exception("Nao foi possivel realizar a troca de usuarios");
+                    }
+                }
+            
+
             RecordOperation("Atualizar", updatedTask.ID,updatedTask.User, updateTaskViewModel.Comment);
 
             return Ok(updatedTask);
         }
 
         [HttpDelete("{taskID}")]
-        public async Task<IActionResult> DeleteTask(Guid taskID, [FromQuery] DeleteTaskViewModel deleTaskViewModel)
+        public async Task<IActionResult> DeleteTask(Guid taskID, [FromBody] DeleteTaskViewModel deleTaskViewModel)
         {
             if (!ModelState.IsValid)
             {

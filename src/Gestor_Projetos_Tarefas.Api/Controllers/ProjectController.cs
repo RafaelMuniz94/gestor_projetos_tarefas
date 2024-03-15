@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Api.Utils;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Request;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Return;
@@ -15,13 +16,13 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
     {
         private readonly IProjectsRepository projectsRepository;
         private readonly ITasksRepository  tasksRepository;
-        private readonly IUsersRepository usersRepository;
+        private readonly IUserServices usersServices;
 
-        public ProjectController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUsersRepository _usersRepository)
+        public ProjectController(IProjectsRepository _projectsRepository, ITasksRepository _tasksRepository, IUserServices _usersServices)
         {
             this.projectsRepository = _projectsRepository;
             this.tasksRepository = _tasksRepository;
-            this.usersRepository = _usersRepository;
+            this.usersServices = _usersServices;
         }
 
         [HttpGet]
@@ -32,10 +33,10 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
             return Ok(projects);
         }
 
-        [HttpGet("{userID}")]
+        [HttpGet("user/{userID}")]
         public async Task<IActionResult> ReturnProjectsByUser(Guid userID)
         {
-            User user = await usersRepository.ReturnUser(userID);
+            User user = await usersServices.ReturnUser(userID);
 
             if(user == null)
             {

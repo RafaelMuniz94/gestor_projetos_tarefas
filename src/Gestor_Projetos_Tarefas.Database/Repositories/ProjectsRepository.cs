@@ -54,7 +54,7 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
 
             if(projectIDs != null)
             {
-               list = await dbContext.Projects.Where(project => projectIDs.All(ids => project.ID == ids)).ToListAsync();
+               list = await dbContext.Projects.Where(project => projectIDs.Contains(project.ID)).ToListAsync();
             }
             else
             {

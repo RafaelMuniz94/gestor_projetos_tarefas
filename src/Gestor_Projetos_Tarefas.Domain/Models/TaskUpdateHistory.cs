@@ -25,7 +25,7 @@ namespace Gestor_Projetos_Tarefas.Domain.Models
 
         [Key]
         public Guid ID { get; set; }
-        public DateTime ModificationTime { get; }
+        public DateTime ModificationTime { get; set; }
 
         [ForeignKey("users")]
         public Guid User { get; set; }

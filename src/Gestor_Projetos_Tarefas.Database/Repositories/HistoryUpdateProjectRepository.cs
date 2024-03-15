@@ -2,6 +2,7 @@
 using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Domain.Models;
 using Gestor_Projetos_Tarefas.Domain.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gestor_Projetos_Tarefas.Database.Repositories
 {
@@ -22,13 +23,14 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
             return dbResponse > 0; 
         }
 
-        public async Task<List<Guid>> ReturnHistoryByUser(Guid userID)
+        public async Task<List<Guid>> ReturnHistoryByUser(Guid userID, DateTime dateLimit)
         {
-            return (from record in dbContext.History
+            return await (from record in dbContext.History
                     join projectTask in dbContext.Tasks on record.Task equals projectTask.ID
-                    where record.User == userID && record.ModificationTime >= DateTime.Now.AddDays(-30) && projectTask.Status == ProjectTaskStatus.Concluida
+                    where record.User == userID && record.ModificationTime >= dateLimit && projectTask.Status == ProjectTaskStatus.Concluida
                     select projectTask.ID
-                 ).ToList();
+                 ).Distinct().ToListAsync();
+
         }
     }
 }

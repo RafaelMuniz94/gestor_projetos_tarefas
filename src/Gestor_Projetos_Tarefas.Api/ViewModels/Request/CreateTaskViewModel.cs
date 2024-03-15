@@ -25,8 +25,6 @@ namespace Gestor_Projetos_Tarefas.Api.ViewModels.Request
         [Required(ErrorMessage = "O ID do usuario deve ser fornecido!")]
         public Guid User { get; set; }
 
-        [Required(ErrorMessage = "O ID do usuario deve ser fornecido!")]
-        public Guid Project { get; set; }
         public string? Comment { get; set; }
     }
 }
