@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
+﻿using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Api.Utils;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Request;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Return;

@@ -53,9 +53,9 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
 
             List<ProjectTask> projectTasks = await tasksRepository.ReturnTasktListByProject(project.ID);
 
-            if(projectTasks.Count == 20)
+            if(projectTasks != null && projectTasks.Count == 20)
             {
-                return BadRequest("O Projeto ja possui o limite de 20 tarefas, finalize ou remova tarefas para adicionar novas!");
+                throw new DomainException("O Projeto ja possui o limite de 20 tarefas, finalize ou remova tarefas para adicionar novas!");
             }
 
             User user = await usersRepository.ReturnUser(createTaskViewModel.User);
@@ -119,7 +119,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
                     bool updatedUser = await usersServices.ChangeTaskUser(oldTask.User, updatedTask.User, updatedTask.Project);
                     if(!updatedUser)
                     {
-                        throw new DomainException("Nao foi possivel realizar a troca de usuarios");
+                        throw new DomainException("Nao foi possivel realizar a troca de usuarios!");
                     }
                 }
             
