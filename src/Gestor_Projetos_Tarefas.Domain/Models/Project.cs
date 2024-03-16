@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace Gestor_Projetos_Tarefas.Domain.Models
 {
     [Table("projects")]
+    [ExcludeFromCodeCoverage]
     public class Project
     {
         public Project()

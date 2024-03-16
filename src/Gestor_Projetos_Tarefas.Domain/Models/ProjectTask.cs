@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace Gestor_Projetos_Tarefas.Domain.Models
 {
     [Table("tasks")]
+    [ExcludeFromCodeCoverage]
     public class ProjectTask
     {
         public ProjectTask()

@@ -1,8 +1,10 @@
 ﻿using Gestor_Projetos_Tarefas.Domain.Models.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Gestor_Projetos_Tarefas.Api.ViewModels.Request
 {
+    [ExcludeFromCodeCoverage]
     public class UpdateTaskViewModel
     {
 

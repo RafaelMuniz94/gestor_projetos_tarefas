@@ -58,6 +58,7 @@ namespace Gestor_Projetos_Tarefas.Test.Services
             // Act
             var result = await userServices.ChangeTaskUser(oldUserID, newUserID, projectID);
 
+            // Assert
             Assert.False(result);
         }
 
@@ -85,7 +86,8 @@ namespace Gestor_Projetos_Tarefas.Test.Services
 
             // Act
             var result = await userServices.ChangeTaskUser(oldUserID, newUserID, projectID);
-
+            
+            // Assert
             Assert.False(result);
         }
 
@@ -114,6 +116,7 @@ namespace Gestor_Projetos_Tarefas.Test.Services
             // Act
             var result = await userServices.ChangeTaskUser(oldUserID, newUserID, projectID);
 
+            // Assert
             Assert.False(result);
         }
 
@@ -142,6 +145,7 @@ namespace Gestor_Projetos_Tarefas.Test.Services
             // Act
             var result = await userServices.ChangeTaskUser(oldUserID, newUserID, projectID);
 
+            // Assert
             Assert.True(result);
         }
 

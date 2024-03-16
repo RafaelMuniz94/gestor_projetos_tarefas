@@ -1,9 +1,11 @@
 ﻿using Gestor_Projetos_Tarefas.Domain.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Gestor_Projetos_Tarefas.Api.ViewModels.Request
 {
+    [ExcludeFromCodeCoverage]
     public class CreateTaskViewModel
     {
         [Required(ErrorMessage = "O campo status deve ser fornecido!")]

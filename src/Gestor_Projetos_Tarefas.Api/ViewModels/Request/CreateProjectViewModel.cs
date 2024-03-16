@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Gestor_Projetos_Tarefas.Api.ViewModels.Request
 {
+    [ExcludeFromCodeCoverage]
     public class CreateProjectViewModel
     {
         [Required(ErrorMessage = "O campo nome deve ser fornecido!")]

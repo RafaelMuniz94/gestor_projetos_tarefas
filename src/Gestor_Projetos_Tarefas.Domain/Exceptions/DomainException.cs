@@ -1,6 +1,9 @@
-﻿namespace Gestor_Projetos_Tarefas.Domain.Exceptions
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Gestor_Projetos_Tarefas.Domain.Exceptions
 {
     [Serializable]
+    [ExcludeFromCodeCoverage]
     public class DomainException: Exception
     {
         public DomainException()
