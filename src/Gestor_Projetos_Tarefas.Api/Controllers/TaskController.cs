@@ -5,8 +5,10 @@ using Gestor_Projetos_Tarefas.Api.Utils;
 using Gestor_Projetos_Tarefas.Api.ViewModels.Request;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Domain.DTOs;
+using Gestor_Projetos_Tarefas.Domain.Exceptions;
 using Gestor_Projetos_Tarefas.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 
 namespace Gestor_Projetos_Tarefas.Api.Controllers
@@ -83,7 +85,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
 
             if(!userSaved)
             {
-                // TODO: LOG 
+                Log.Information($"A tarefa {task.ID} nao foi registrada para o usuario {user.ID}!");
             }
             
             RecordOperation("Criar", createdTask.ID,createdTask.User, createTaskViewModel.Comment);
@@ -117,7 +119,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
                     bool updatedUser = await usersServices.ChangeTaskUser(oldTask.User, updatedTask.User, updatedTask.Project);
                     if(!updatedUser)
                     {
-                        throw new Exception("Nao foi possivel realizar a troca de usuarios");
+                        throw new DomainException("Nao foi possivel realizar a troca de usuarios");
                     }
                 }
             
@@ -145,7 +147,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
 
             if (!(bool)deleteStatus)
             {
-                throw new Exception("Nao foi possivel deletar a tarefa!"); 
+                throw new DomainException("Nao foi possivel deletar a tarefa!"); 
             }
 
             RecordOperation("Deletar", taskID, deleTaskViewModel.User, deleTaskViewModel.Comment);
@@ -153,14 +155,14 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
         }
 
 
-        private async void RecordOperation(string operation, Guid taskID,Guid UserID, string? comment)
+        private async void RecordOperation(string operation, Guid taskID,Guid userID, string? comment)
         {
-            TaskUpdateHistory record = new TaskUpdateHistory(UserID, operation, taskID, comment);
+            TaskUpdateHistory record = new TaskUpdateHistory(userID, operation, taskID, comment);
             bool historySuccess = await historyRepository.AddHistoryRecord(record);
 
             if (!historySuccess)
             {
-                // TODO: Adicionar LOG
+                Log.Information($"Nao foi possivel adicionar o registro {record.ID}, para a Tarefa {taskID} e para o usuario {userID}, atraves da operacao {operation} e com o comentario {comment}");
             }
         }
     }

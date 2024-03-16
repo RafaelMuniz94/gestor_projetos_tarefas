@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
+using Gestor_Projetos_Tarefas.Domain.Exceptions;
 using Gestor_Projetos_Tarefas.Domain.Models;
 using Gestor_Projetos_Tarefas.Domain.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +46,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
 
                 if(openedTasks)
                 {
-                    throw new Exception("Nao sera possivel remover a tarefa, existem tarefas nao concluidas para o usuario, favor finalizar!");
+                    throw new DomainException("Nao sera possivel remover a tarefa, existem tarefas nao concluidas para o usuario, favor finalizar!");
                 }
             }
 
@@ -58,7 +59,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
 
             if (!(bool)deleteStatus)
             {
-                throw new Exception("Nao foi possivel remover o projeto!");
+                throw new DomainException("Nao foi possivel remover o projeto!");
             }
 
             return NoContent();
@@ -71,7 +72,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
             
             if(requester != null && requester.Role != Role.Gerente)
             {
-                throw new Exception("O usuario nao possui permissao para gerar relatorio!");
+                throw new DomainException("O usuario nao possui permissao para gerar relatorio!");
             }
 
             List<ProjectTask> userTasks = await tasksRepository.ReturnTasktListByUser(targetUserID);

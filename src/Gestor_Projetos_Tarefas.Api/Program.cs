@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Gestor_Projetos_Tarefas.Api.Mappers;
 using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Api.Services;
+using Gestor_Projetos_Tarefas.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
 app.MapControllers();
 
