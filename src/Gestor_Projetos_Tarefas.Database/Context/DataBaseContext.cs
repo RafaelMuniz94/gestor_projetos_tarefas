@@ -1,10 +1,12 @@
 ﻿using Gestor_Projetos_Tarefas.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace Gestor_Projetos_Tarefas.Database.Context
 {
+    [ExcludeFromCodeCoverage]
     public class DataBaseContext: DbContext
     {
         public DbSet<Project> Projects { get; set; }
