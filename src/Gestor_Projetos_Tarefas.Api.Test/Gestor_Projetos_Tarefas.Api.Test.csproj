@@ -11,9 +11,17 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.15" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
+    <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gestor_Projetos_Tarefas.Api\Gestor_Projetos_Tarefas.Api.csproj" />
+    <ProjectReference Include="..\Gestor_Projetos_Tarefas.Database\Gestor_Projetos_Tarefas.Database.csproj" />
+    <ProjectReference Include="..\Gestor_Projetos_Tarefas.Domain\Gestor_Projetos_Tarefas.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
