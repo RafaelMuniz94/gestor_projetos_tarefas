@@ -1,6 +1,7 @@
 ﻿using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Domain.Models;
+using Gestor_Projetos_Tarefas.Domain.Models.Enums;
 
 namespace Gestor_Projetos_Tarefas.Api.Services
 {
@@ -40,7 +41,7 @@ namespace Gestor_Projetos_Tarefas.Api.Services
 
            if(tasks.Count() > 0) {
 
-                List<Guid> projects = tasks.Where(task => task.User == userID).Select(field => field.Project).ToList();
+                List<Guid> projects = tasks.Where(task => task.User == userID && task.Status != ProjectTaskStatus.Concluida).Select(field => field.Project).ToList();
 
                 user.Projects = await projectsRepository.ReturnProjectList(projects);
             }
