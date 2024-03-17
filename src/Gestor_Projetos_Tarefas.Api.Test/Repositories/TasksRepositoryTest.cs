@@ -17,7 +17,7 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
     {
 
         private readonly DataBaseContext context;
-        private readonly ProjectsRepository repository;
+        private readonly TasksRepository repository;
 
         public TasksRepositoryTest()
         {
@@ -29,7 +29,7 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
                 .Build();
 
             context = new DataBaseContext(configuration, options);
-            repository = new ProjectsRepository(context);
+            repository = new TasksRepository(context);
         }
 
 
@@ -38,7 +38,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         {
 
             // Arrange
-            var repository = new TasksRepository(context);
             var task = new ProjectTask
             {
                 ID = Guid.NewGuid(),
@@ -66,7 +65,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task DeleteTask_ShouldDeleteTaskFromDatabase()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskID = Guid.NewGuid();
             var task = new ProjectTask
             {
@@ -97,7 +95,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task ReturnTask_ShouldReturnTaskFromDatabase()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskID = Guid.NewGuid();
             var task = new ProjectTask
             {
@@ -128,7 +125,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task ReturnTaskListByProject_ShouldReturnTasksFromDatabase()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var projectID = Guid.NewGuid();
             var tasksToAdd = new List<ProjectTask>
              {
@@ -182,7 +178,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task ReturnTaskListByUser_ShouldReturnTasksFromDatabase()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var userID = Guid.NewGuid();
             var tasksToAdd = new List<ProjectTask>
              {
@@ -236,7 +231,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task UpdateTask_ShouldUpdateTaskInDatabase()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskId = Guid.NewGuid();
             var initialTask = new ProjectTask
             {
@@ -281,7 +275,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task UpdateTask_ShouldUpdateTaskOnlyTitleChange()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskId = Guid.NewGuid();
             string initialTitle = "Tarefa Inicial";
             var initialTask = new ProjectTask
@@ -322,7 +315,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task UpdateTask_ShouldUpdateTaskOnlyStatusChange()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskId = Guid.NewGuid();
             ProjectTaskStatus initialStatus = ProjectTaskStatus.Pendente;
             var initialTask = new ProjectTask
@@ -363,7 +355,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task UpdateTask_ShouldUpdateTaskOnlyDescriptionChange()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskId = Guid.NewGuid();
             string initialDescription = "Descricao Inicial";
             var initialTask = new ProjectTask
@@ -404,7 +395,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task UpdateTask_ShouldUpdateTaskOnlyExpirationDateChange()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskId = Guid.NewGuid();
             DateTime initialExpirationDate = DateTime.Now;
             var initialTask = new ProjectTask
@@ -445,7 +435,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task UpdateTask_ShouldUpdateTaskOnlyProjectChange()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskId = Guid.NewGuid();
             Guid initialProject = Guid.NewGuid();
             var initialTask = new ProjectTask
@@ -486,7 +475,6 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public async Task UpdateTask_ShouldUpdateTaskOnlyUserChange()
         {
             // Arrange
-            var repository = new TasksRepository(context);
             var taskId = Guid.NewGuid();
             Guid initialUser = Guid.NewGuid();
             var initialTask = new ProjectTask

@@ -9,11 +9,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Gestor_Projetos_Tarefas.Database.Context;
 
-namespace Produtos_api.test.TestIntegracao
+namespace Gestor_Projetos_Tarefas.Api.Test.Integration
 {
     // Criando um Factory customizado, dessa forma, sera possivel trocar o tipo de banco que utilizo para testes
     // Evitando que o banco esteja sujo quando o teste de integracao executar.
-    // Essa classe ira utilizar reflecions para obter as configuracoes feitas na startup da api (Produtos_api/Program.cs)
+    // Essa classe ira utilizar reflecions para obter as configuracoes feitas na startup da api (Gestor_Projetos_Tarefas.Api/Program.cs)
+
     public class WebApplicationTest<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)

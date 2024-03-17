@@ -22,7 +22,7 @@ namespace Gestor_Projetos_Tarefas.Database.Repositories
 
             int dbResponse = await dbContext.SaveChangesAsync();
 
-            return dbResponse > 0 ? true: false;
+            return dbResponse > 0 ;
         }
 
         public async Task<bool?> RemoveProjectFromUser(Guid userID, Guid projectID)
