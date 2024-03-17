@@ -24,20 +24,18 @@ jobs:
     - name: Executa a compilacao
       run: dotnet build src/Gestor_Projetos_Tarefas.sln --configuration Release
 
-    - name: Criar diretório 'build'
-      run: mkdir -p ./build
 
     - name: Salvando artefatos da compilacao api (bin)
       uses: actions/upload-artifact@v2
       with:
         name:  artefatos-api
-        path: ./Gestor_Projetos_Tarefas.Api/bin/Release/net7.0
+        path: src/Gestor_Projetos_Tarefas.Api/bin/Release/net7.0
 
     - name: Salvando artefatos da compilacao testes
       uses: actions/upload-artifact@v2
       with:
         name:  artefatos-teste-build
-        path: ./Gestor_Projetos_Tarefas.Api/bin/Release/net7.0
+        path: src/Gestor_Projetos_Tarefas.Api.Test/bin/Release/net7.0
 
 
   testar:
