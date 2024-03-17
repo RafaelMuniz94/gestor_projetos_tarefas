@@ -22,7 +22,7 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public TasksRepositoryTest()
         {
             var options = new DbContextOptionsBuilder<DataBaseContext>()
-                .UseInMemoryDatabase(databaseName: "LocalTestDatabase")
+                .UseInMemoryDatabase(databaseName: "LocalTestDatabase3")
                 .Options;
 
             var configuration = new ConfigurationBuilder()

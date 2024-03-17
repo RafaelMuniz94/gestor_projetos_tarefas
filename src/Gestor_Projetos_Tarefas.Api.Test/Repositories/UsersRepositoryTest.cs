@@ -21,7 +21,7 @@ namespace Gestor_Projetos_Tarefas.Tests.Database.Repositories
         public UsersRepositoryTest()
         {
             var options = new DbContextOptionsBuilder<DataBaseContext>()
-                .UseInMemoryDatabase(databaseName: "LocalTestDatabase")
+                .UseInMemoryDatabase(databaseName: "LocalTestDatabase4")
                 .Options;
 
             var configuration = new ConfigurationBuilder()
