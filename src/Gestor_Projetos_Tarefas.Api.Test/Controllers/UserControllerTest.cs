@@ -23,10 +23,10 @@ namespace Gestor_Projetos_Tarefas.Api.Tests.Controllers
             var userId = Guid.NewGuid();
             var projectId = Guid.NewGuid();
             var projectsRepositoryMock = new Mock<IProjectsRepository>();
-            projectsRepositoryMock.Setup(repo => repo.ReturnProject(projectId)).ReturnsAsync((Project)null);
+            projectsRepositoryMock.Setup(repository => repository.ReturnProject(projectId)).ReturnsAsync((Project)null);
             var tasksRepositoryMock = new Mock<ITasksRepository>();
             var usersRepositoryMock = new Mock<IUsersRepository>();
-            usersRepositoryMock.Setup(repo => repo.RemoveProjectFromUser(userId, projectId)).ReturnsAsync(false);
+            usersRepositoryMock.Setup(repository => repository.RemoveProjectFromUser(userId, projectId)).ReturnsAsync(false);
             var controller = new UserController(projectsRepositoryMock.Object, tasksRepositoryMock.Object, usersRepositoryMock.Object, null, null);
 
             // Act
@@ -49,9 +49,9 @@ namespace Gestor_Projetos_Tarefas.Api.Tests.Controllers
                 new ProjectTask { User = userId, Status = ProjectTaskStatus.Pendente }
             };
             var projectsRepositoryMock = new Mock<IProjectsRepository>();
-            projectsRepositoryMock.Setup(repo => repo.ReturnProject(projectId)).ReturnsAsync(new Project());
+            projectsRepositoryMock.Setup(repository => repository.ReturnProject(projectId)).ReturnsAsync(new Project());
             var tasksRepositoryMock = new Mock<ITasksRepository>();
-            tasksRepositoryMock.Setup(repo => repo.ReturnTasktListByProject(projectId)).ReturnsAsync(tasks);
+            tasksRepositoryMock.Setup(repository => repository.ReturnTasktListByProject(projectId)).ReturnsAsync(tasks);
             var usersRepositoryMock = new Mock<IUsersRepository>();
             var controller = new UserController(projectsRepositoryMock.Object, tasksRepositoryMock.Object, usersRepositoryMock.Object, null, null);
 
@@ -160,7 +160,7 @@ namespace Gestor_Projetos_Tarefas.Api.Tests.Controllers
             var projectId = Guid.NewGuid();
 
             var projectsRepositoryMock = new Mock<IProjectsRepository>();
-            projectsRepositoryMock.Setup(repo => repo.ReturnProject(projectId)).ReturnsAsync((Project)null);
+            projectsRepositoryMock.Setup(repository => repository.ReturnProject(projectId)).ReturnsAsync((Project)null);
 
             var usersRepositoryMock = new Mock<IUsersRepository>();
             var controller = new UserController(projectsRepositoryMock.Object, null, usersRepositoryMock.Object, null, null);
@@ -230,7 +230,7 @@ namespace Gestor_Projetos_Tarefas.Api.Tests.Controllers
 
             var tasksRepositoryMock = new Mock<ITasksRepository>();
 
-            tasksRepositoryMock.Setup(repo => repo.ReturnTasktListByUser(targetUserId)).ReturnsAsync(tasks);
+            tasksRepositoryMock.Setup(repository => repository.ReturnTasktListByUser(targetUserId)).ReturnsAsync(tasks);
 
             var historyRepositoryMock = new Mock<IHistoryUpdateProjectRepository>();
             historyRepositoryMock.Setup(repository => repository.ReturnHistoryByUser(It.IsAny<Guid>(), It.IsAny<DateTime>())).ReturnsAsync(new List<Guid>());
@@ -266,7 +266,7 @@ namespace Gestor_Projetos_Tarefas.Api.Tests.Controllers
             };
 
             var tasksRepositoryMock = new Mock<ITasksRepository>();
-            tasksRepositoryMock.Setup(repo => repo.ReturnTasktListByUser(targetUserId)).ReturnsAsync(tasks);
+            tasksRepositoryMock.Setup(repository => repository.ReturnTasktListByUser(targetUserId)).ReturnsAsync(tasks);
             var historyRepositoryMock = new Mock<IHistoryUpdateProjectRepository>();
             historyRepositoryMock.Setup(repository => repository.ReturnHistoryByUser(It.IsAny<Guid>(), It.IsAny<DateTime>())).ReturnsAsync(completeTasks);
 

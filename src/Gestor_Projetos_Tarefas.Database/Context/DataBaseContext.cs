@@ -22,7 +22,10 @@ namespace Gestor_Projetos_Tarefas.Database.Context
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(configuration.GetConnectionString("Database"));
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite(configuration.GetConnectionString("Database"));
+            }
         }
     }
 }
