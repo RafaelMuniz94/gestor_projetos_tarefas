@@ -87,7 +87,7 @@ jobs:
         path: ./dockerFile/
 
     - name: View files
-      run: cd ./dockerFile && ls
+      run: cd ./deployed/ && ls
 
     - name: Baixando Artefatos
       uses: actions/download-artifact@v2
