@@ -7,6 +7,7 @@ using Gestor_Projetos_Tarefas.Api.Mappers;
 using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Api.Services;
 using Gestor_Projetos_Tarefas.Api.Middlewares;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,12 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddAutoMapper(typeof(TaskUpdateMapper));
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console(outputTemplate: "[{Level:u3}] {Message:lj} - {Properties:j}{NewLine}{Exception}")
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
 
 var app = builder.Build();
