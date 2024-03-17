@@ -31,6 +31,12 @@ jobs:
         name:  artefatos-api-dockerFile
         path: src/Gestor_Projetos_Tarefas.Api/Dockerfile
 
+    - name: Salvando src
+      uses: actions/upload-artifact@v2
+      with:
+        name:  artefatos-api-src
+        path: src/
+
 
     - name: Salvando artefatos da compilacao api (bin)
       uses: actions/upload-artifact@v2
@@ -89,7 +95,7 @@ jobs:
     - name: Baixando Artefatos
       uses: actions/download-artifact@v2
       with:
-        name: artefatos-api
+        name: artefatos-api-src
         path: ./deployed/
     
     - name: View files
