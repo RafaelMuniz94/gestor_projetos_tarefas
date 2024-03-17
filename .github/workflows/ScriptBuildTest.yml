@@ -93,7 +93,7 @@ jobs:
         path: ./deployed/
 
     - name: Construindo imagem Docker
-      run: docker build -f ./dockerFile/ -t gestorprojetostarefasapi:latest ./deployed/
+      run: docker build -f ./dockerFile/Dockerfile -t gestorprojetostarefasapi:latest ./deployed/
 
     - name: Salvando imagem Docker nos artefatos
       uses: actions/upload-artifact@v2
