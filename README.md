@@ -128,4 +128,4 @@ Na terceira fase, escreva no arquivo **README.md** em uma sessão dedicada o que
 
 ## SQLite
 
-O banco de dados escolhido para essa solução foi o SQLite, devido a sua simplicidade, não necessitar de configurações para executar e ser multiplataforma, importante para execução dos testes de integração em **VMs** do **GitHub Actions**.
+O banco de dados escolhido para essa solução foi o SQLite, devido a sua simplicidade, não necessitar de configurações para executar e ser multiplataforma.
