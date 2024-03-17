@@ -25,6 +25,13 @@ jobs:
       run: dotnet build src/Gestor_Projetos_Tarefas.sln --configuration Release
 
 
+    - name: Salvando dockerfile
+      uses: actions/upload-artifact@v2
+      with:
+        name:  artefatos-api-dockerFile
+        path: src/Gestor_Projetos_Tarefas.Api/Dockerfile
+
+
     - name: Salvando artefatos da compilacao api (bin)
       uses: actions/upload-artifact@v2
       with:
@@ -51,6 +58,12 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 7.x
+
+    - name: Baixando DockerFile
+      uses: actions/download-artifact@v2
+      with:
+        name: artefatos-teste-build
+        path: ./testes/
     
     - name: Baixando Artefatos
       uses: actions/download-artifact@v2
@@ -67,6 +80,12 @@ jobs:
 
     steps:
 
+    - name: Baixando Artefatos dockerfile
+      uses: actions/download-artifact@v2
+      with:
+        name: artefatos-api-dockerFile
+        path: ./dockerFile/
+
     - name: Baixando Artefatos
       uses: actions/download-artifact@v2
       with:
@@ -74,7 +93,7 @@ jobs:
         path: ./deployed/
 
     - name: Construindo imagem Docker
-      run: docker build -f ./src/Gestor_Projetos_Tarefas.Api/Dockerfile -t nome-da-imagem:latest ./deployed/
+      run: docker build -f ./dockerFile/ -t gestorprojetostarefasapi:latest ./deployed/
 
     - name: Salvando imagem Docker nos artefatos
       uses: actions/upload-artifact@v2
