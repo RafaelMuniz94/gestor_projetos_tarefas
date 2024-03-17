@@ -19,7 +19,7 @@ jobs:
         dotnet-version: 7.x
 
     - name: Baixa dependencias dos projetos
-      run: dotnet restore
+      run: dotnet restore src/Gestor_Projetos_Tarefas.sln
 
     - name: Executa a compilacao
       run: dotnet build --configuration Release
