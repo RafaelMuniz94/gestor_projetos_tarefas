@@ -37,7 +37,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name:  artefatos-teste-build
-        path: ./Gestor_Projetos_Tarefas.Api.Test/bin/Release/net7.0
+        path: ./Gestor_Projetos_Tarefas.Api/bin/Release/net7.0
 
 
   testar:
