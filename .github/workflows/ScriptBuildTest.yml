@@ -22,7 +22,7 @@ jobs:
       run: dotnet restore src/Gestor_Projetos_Tarefas.sln
 
     - name: Executa a compilacao
-      run: dotnet build --configuration Release
+      run: dotnet build src/Gestor_Projetos_Tarefas.sln --configuration Release
 
     - name: Criar diretório 'build'
       run: mkdir -p ./build
