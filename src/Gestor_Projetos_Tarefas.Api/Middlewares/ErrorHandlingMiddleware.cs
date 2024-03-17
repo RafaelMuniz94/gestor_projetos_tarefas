@@ -28,7 +28,7 @@ namespace Gestor_Projetos_Tarefas.Api.Middlewares
                 } catch (DomainException domainException)
                 {
                     Log.Error($"Processamento nao foi finalizado devido a Exception: {domainException.Message}");
-                    var errorMessage = JsonConvert.SerializeObject(new { error = $"E necessario validar o erro a seguir: {domainException.Message}!" });
+                    var errorMessage = JsonConvert.SerializeObject(new { error = $"Necessario validar o erro a seguir: {domainException.Message}!" });
                     appContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     appContext.Response.ContentType = "application/json";
 

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
+﻿using Gestor_Projetos_Tarefas.Api.Services.Interfaces;
 using Gestor_Projetos_Tarefas.Database.Interfaces;
 using Gestor_Projetos_Tarefas.Domain.Exceptions;
 using Gestor_Projetos_Tarefas.Domain.Models;
@@ -95,7 +94,7 @@ namespace Gestor_Projetos_Tarefas.Api.Controllers
 
             decimal tasksMedia = (completeTaksTotal*100) / userTasksTotal;
 
-            return Ok($"O usuario {targetUserID} realizou {completeTaksTotal} das {userTasksTotal}, totalizando um total de {tasksMedia}% de finalizacoes");
+            return Ok($"O usuario {targetUserID} realizou {completeTaksTotal} das {userTasksTotal}, totalizando um total de {tasksMedia}% de finalizacoes!");
         }
     }
 }

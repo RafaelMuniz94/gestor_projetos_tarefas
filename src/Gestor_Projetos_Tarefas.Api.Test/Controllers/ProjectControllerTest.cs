@@ -10,7 +10,7 @@ using Gestor_Projetos_Tarefas.Domain.Models;
 
 namespace Gestor_Projetos_Tarefas.Tests.Controllers
 {
-    public class ProjectControllerTests
+    public class ProjectControllerTest
     {
         [Fact]
         public async Task ReturnProjects_ReturnsOkResult()
