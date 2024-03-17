@@ -96,7 +96,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: artefatos-api-src
-        path: ./deployed/
+        path: ./deployed/src/
     
     - name: View files
       run: cd ./deployed/ && ls && ls -R .
