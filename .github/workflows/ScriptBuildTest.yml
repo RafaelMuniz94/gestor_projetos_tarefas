@@ -86,14 +86,14 @@ jobs:
         name: artefatos-api-dockerFile
         path: ./dockerFile/
 
-    - name: View files
-      run: cd ./deployed/ && ls
-
     - name: Baixando Artefatos
       uses: actions/download-artifact@v2
       with:
         name: artefatos-api
         path: ./deployed/
+    
+    - name: View files
+      run: cd ./deployed/ && ls && ls -R .
 
     - name: Construindo imagem Docker
       run: docker build -f ./dockerFile/.Dockerfile -t gestorprojetostarefasapi:latest ./deployed/
