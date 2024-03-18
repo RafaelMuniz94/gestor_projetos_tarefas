@@ -99,11 +99,11 @@ jobs:
         path: ./deployed/src/
 
     - name: Construindo imagem Docker
-      run: docker build -f ./dockerFile/Dockerfile -t gestorprojetostarefasapi:latest ./deployed/src --output ./deployed/image
+      run: docker build -f ./dockerFile/Dockerfile -t gestorprojetostarefasapi:latest ./deployed/src 
 
     - name: Salvando imagem Docker nos artefatos
       uses: actions/upload-artifact@v2
       with:
         name: dockerImage
-        path: ./deployed/image
+        path: ./deployed
         retention-days: 7
