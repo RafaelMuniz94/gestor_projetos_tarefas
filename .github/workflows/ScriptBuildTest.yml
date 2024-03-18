@@ -105,5 +105,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: dockerImage
-        path: ./deployed
+        path: ./deployed/image
         retention-days: 7
