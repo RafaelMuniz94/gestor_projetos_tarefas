@@ -84,6 +84,8 @@ docker build -f ./Dockerfile  -t gestorprojetostarefasapi:dev  --build-arg "BUIL
 - O parâmetro `gestorprojetostarefasapi:dev` indica a imagem que será utilizada no container.
 
 9. Execute chamadas por meio de um cliente HTTP. O padrão de URL a ser seguido será: `http://localhost:3000/api/<controller>/<endpoint>`
+
+Você também pode encontrar a imagem pré-construída no repositório desta aplicação através dos artefatos do Github Workflows.
 ---
 ### Fase 2: Refinamento
 

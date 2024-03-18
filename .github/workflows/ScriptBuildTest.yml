@@ -97,9 +97,6 @@ jobs:
       with:
         name: artefatos-api-src
         path: ./deployed/src/
-    
-    - name: View files
-      run: cd ./deployed/ && ls && ls -R .
 
     - name: Construindo imagem Docker
       run: docker build -f ./dockerFile/Dockerfile -t gestorprojetostarefasapi:latest ./deployed/src
@@ -107,6 +104,6 @@ jobs:
     - name: Salvando imagem Docker nos artefatos
       uses: actions/upload-artifact@v2
       with:
-        name: artefatos-api
+        name: dockerImage
         path: ./deployed
         retention-days: 7
